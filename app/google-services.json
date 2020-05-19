@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "309701577642",
+    "firebase_url": "https://spliteverybit.firebaseio.com",
+    "project_id": "spliteverybit",
+    "storage_bucket": "spliteverybit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309701577642:android:057673450bf4491b7579d3",
+        "android_client_info": {
+          "package_name": "com.example.spliteverybit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309701577642-io43gk6sojnn21e0tia4ed56mm85oegi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spliteverybit",
+            "certificate_hash": "77a991a9cf60f711ecd4cc798a7897974f833b27"
+          }
+        },
+        {
+          "client_id": "309701577642-t5voemtsii5gfmd9hjeejcfmofb5f3ea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxSSzL1jcUJgRGxyGt2IWzB5rOaobNvdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309701577642-t5voemtsii5gfmd9hjeejcfmofb5f3ea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
