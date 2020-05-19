@@ -51,9 +51,8 @@ FirebaseUser user;
             public void onClick(View v) {
                 String s1=group_name.getText().toString();
                 d1= FirebaseDatabase.getInstance().getReference("Groups");
-                Pair p1=new Pair(name1,0);
-                ArrayList<Pair<String,Integer>> name=new ArrayList<Pair<String,Integer>>();
-                name.add(p1);
+                ArrayList<String> name=new ArrayList<String>();
+                name.add(name1);
                 Group_information form1 = new Group_information(name);
                 d1.child(s1).setValue(form1);
                 Toast.makeText(AddGroup.this, "Group Added",

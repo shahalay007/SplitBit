@@ -45,6 +45,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, JoinGroup.class));
             }
         });
+        Button g_status =(Button)findViewById(R.id.status);
+        g_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, GroupStatus.class));
+            }
+        });
 
     }
 }

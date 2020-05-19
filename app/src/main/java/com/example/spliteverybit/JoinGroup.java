@@ -19,9 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import javax.sql.StatementEvent;
 
 public class JoinGroup extends AppCompatActivity {
 private EditText group;
@@ -29,7 +26,8 @@ boolean flag=false;
 FirebaseUser user;
     String a,b;
 DatabaseReference ref,d1,ref1;
-ArrayList<Pair<String,Integer>> name,x;
+ArrayList<Pair<String,Integer>> name;
+    ArrayList<String> x;
 String name1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ String name1;
         Button joingroup=(Button)findViewById(R.id.join_group);
         group=(EditText)findViewById(R.id.groupname);
         d1 = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
-        x=new ArrayList<Pair<String, Integer>>();
+        x=new ArrayList<String>();
         d1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,18 +84,17 @@ String name1;
 
                             for(DataSnapshot dss:dataSnapshot.getChildren())
                             {
-                                    Pair<String,Integer>p1=(Pair<String,Integer>)dss.getValue();
+                                    String p1=dss.getValue().toString();
                                     x.add(p1);
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
-                    Pair p1=new Pair(name1,0);
-                    x.add(p1);
+
+                    x.add(name1);
                     Group_information form1 = new Group_information(x);
                     ref1.setValue(form1);
                     Toast.makeText(JoinGroup.this, "Group Joined",
