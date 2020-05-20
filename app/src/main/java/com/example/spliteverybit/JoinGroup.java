@@ -24,10 +24,10 @@ public class JoinGroup extends AppCompatActivity {
 private EditText group;
 boolean flag=false;
 FirebaseUser user;
+String s1;
     String a,b;
 DatabaseReference ref,d1,ref1;
-ArrayList<Pair<String,Integer>> name;
-    ArrayList<String> x;
+    ArrayList<Group_information> x;
 String name1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,9 @@ String name1;
         String id=user.getUid();
         setContentView(R.layout.activity_join_group);
         Button joingroup=(Button)findViewById(R.id.join_group);
-        group=(EditText)findViewById(R.id.groupname);
+        group=(EditText)findViewById(R.id.group_name);
         d1 = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
-        x=new ArrayList<String>();
+        x=new ArrayList<Group_information>();
         d1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -49,12 +49,13 @@ String name1;
 
             }
         });
+
        ref= FirebaseDatabase.getInstance().getReference("Groups");
 
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String s1=group.getText().toString();
+                 s1=group.getText().toString();
                /* ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,29 +77,33 @@ String name1;
                 }*/
               //  else
                // {
+
                 ref1= FirebaseDatabase.getInstance().getReference("Groups").child(s1);
-
-                    ref1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            for(DataSnapshot dss:dataSnapshot.getChildren())
-                            {
-                                    String p1=dss.getValue().toString();
-                                    x.add(p1);
-                            }
+                ref1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot d:dataSnapshot.getChildren())
+                        {
+                            String p1=d.getValue().toString();
+                            Group_information g=new Group_information(p1);
+                            x.add(g);
                         }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Group_information g=new Group_information(name1);
+                        x.add(g);
+                        ref1.setValue(x);
+                        Toast.makeText(JoinGroup.this, "Group Joined",
+                                Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    x.add(name1);
-                    Group_information form1 = new Group_information(x);
-                    ref1.setValue(form1);
-                    Toast.makeText(JoinGroup.this, "Group Joined",
-                            Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+
+
+
               //  }
 
             }
@@ -106,5 +111,7 @@ String name1;
 
 
         });
+
+
     }
 }

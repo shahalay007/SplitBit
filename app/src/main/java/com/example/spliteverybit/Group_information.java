@@ -7,18 +7,18 @@ import java.util.Vector;
 
 public class Group_information {
 
-    public ArrayList<String> name;
+    public String name;
 
     public Group_information()
     {
 
     }
 
-    public Group_information(ArrayList<String>name) {
+    public Group_information(String name) {
 
         this.name = name;
     }
 
 
-    public ArrayList<String>getName() { return name; }
+    public String getName() { return name; }
 }

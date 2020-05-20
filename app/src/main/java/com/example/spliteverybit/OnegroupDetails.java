@@ -7,11 +7,12 @@ import android.util.Pair;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class OnegroupDetails extends AppCompatActivity {
 ArrayList<String>v1,v2;
-Map<String,Integer>m;
+Map<String,Integer>m=new HashMap< String,Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ Map<String,Integer>m;
         String s="";
         for(i=0;i<v3.size();i++)
         {
-            s=v3.get(i).first.first+"->"+v3.get(i).first.second+"="+ String.valueOf(v3.get(i).second) +"\n";
+            s=s+v3.get(i).first.first+"->"+v3.get(i).first.second+"="+ String.valueOf(v3.get(i).second) +"\n";
         }
         TextView t1=(TextView)findViewById(R.id.transactions);
         t1.setText(s);

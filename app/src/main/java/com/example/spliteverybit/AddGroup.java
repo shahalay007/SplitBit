@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,13 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class AddGroup extends AppCompatActivity {
 private EditText group_name;
 private DatabaseReference d1,ref;
 String name1;
 FirebaseUser user;
+ArrayList<Group_information> x;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +50,10 @@ FirebaseUser user;
             public void onClick(View v) {
                 String s1=group_name.getText().toString();
                 d1= FirebaseDatabase.getInstance().getReference("Groups");
-                ArrayList<String> name=new ArrayList<String>();
-                name.add(name1);
-                Group_information form1 = new Group_information(name);
-                d1.child(s1).setValue(form1);
+                Group_information g=new Group_information(name1);
+                x=new ArrayList<Group_information>();
+                x.add(g);
+                d1.child(s1).setValue(x);
                 Toast.makeText(AddGroup.this, "Group Added",
                         Toast.LENGTH_SHORT).show();
             }
