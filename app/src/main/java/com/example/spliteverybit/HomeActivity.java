@@ -52,6 +52,20 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, GroupStatus.class));
             }
         });
+        Button show=(Button)findViewById(R.id.button3);
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ShowMembers.class));
+            }
+        });
+        Button add1=(Button)findViewById(R.id.add_trans);
+        add1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, AddTransactions.class));
+            }
+        });
 
     }
 }

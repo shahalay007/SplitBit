@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OnegroupDetails"></activity>
+        <activity android:name=".AddTransactions"></activity>
+        <activity android:name=".ShowMembers" />
+        <activity android:name=".OnegroupDetails" />
         <activity android:name=".GroupStatus" />
         <activity android:name=".JoinGroup" />
         <activity android:name=".AddGroup" />

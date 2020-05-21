@@ -3,6 +3,7 @@ package com.example.spliteverybit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,11 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JoinGroup extends AppCompatActivity {
 private EditText group;
 boolean flag=false;
 FirebaseUser user;
+    public static final String SHARED_PREF="shared_preferences";
 String s1;
     String a,b;
 DatabaseReference ref,d1,ref1;
@@ -33,7 +39,7 @@ String name1;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         user= FirebaseAuth.getInstance().getCurrentUser();
-        String id=user.getUid();
+        final String id=user.getUid();
         setContentView(R.layout.activity_join_group);
         Button joingroup=(Button)findViewById(R.id.join_group);
         group=(EditText)findViewById(R.id.group_name);
@@ -55,31 +61,27 @@ String name1;
         joingroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 s1=group.getText().toString();
-               /* ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String s2=dataSnapshot.getKey();
-                        if(s2==s1) {
-                            flag = true;
-                            ref1= FirebaseDatabase.getInstance().getReference("Groups").child(s1);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                if(!flag)
-                {
-                    Toast.makeText(JoinGroup.this, "No group found", Toast.LENGTH_SHORT).show();
-                }*/
-              //  else
-               // {
+                s1=group.getText().toString();
 
                 ref1= FirebaseDatabase.getInstance().getReference("Groups").child(s1);
-                ref1.addListenerForSingleValueEvent(new ValueEventListener() {
+                DatabaseReference reg2 = ref1.push();
+
+                Map<Object,String> mp =new HashMap<>();
+                mp.put("id",user.getUid().toString());
+                reg2.setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isComplete()){
+                            SharedPreferences sharedPreferences=getSharedPreferences(SHARED_PREF,MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.putString(id, String.valueOf(0));
+                            Toast.makeText(JoinGroup.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(JoinGroup.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                /*ref1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot d:dataSnapshot.getChildren())
@@ -100,11 +102,11 @@ String name1;
 
                     }
 
-                });
+                });*/
 
 
 
-              //  }
+                //  }
 
             }
 

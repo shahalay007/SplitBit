@@ -8,7 +8,6 @@ import java.util.Vector;
 public class Group_information {
 
     public String name;
-
     public Group_information()
     {
 
