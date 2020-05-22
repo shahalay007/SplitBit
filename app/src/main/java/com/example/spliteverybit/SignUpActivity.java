@@ -31,8 +31,9 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String[] hostels = {"Dhansiri", "Siang", "Lohit", "Kameng"};
     private StorageReference storageReference;
     private FirebaseStorage firebaseStorage;
-    private DatabaseReference databaseReference,d1;
+    private DatabaseReference databaseReference,d1,d2;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference d;
 
 
     private Spinner hostel;
@@ -43,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         auth = FirebaseAuth.getInstance();
+
 
         hostel = (Spinner) findViewById(R.id.hostel);
 
@@ -113,8 +115,10 @@ public class SignUpActivity extends AppCompatActivity {
                             databaseReference = databaseReference.child("Users");
                             databaseReference.child(user.getUid()).setValue(userinfo);
                             databaseReference = FirebaseDatabase.getInstance().getReference().child("UserID");
-                            d1=FirebaseDatabase.getInstance().getReference().child("Name");
-                            d1.child(name).setValue(user.getUid());
+                            d1=FirebaseDatabase.getInstance().getReference().child("Id-Name");
+                            d1.child(user.getUid()).setValue(name);
+                            d2=FirebaseDatabase.getInstance().getReference().child("Name");
+                            d2.child(name).setValue(user.getUid());
                             databaseReference.child(email1).setValue(user.getUid());
                             startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                             finish();

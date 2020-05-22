@@ -28,6 +28,7 @@ import java.util.Map;
 public class JoinGroup extends AppCompatActivity {
 private EditText group;
 boolean flag=false;
+DatabaseReference d2;
 FirebaseUser user;
     public static final String SHARED_PREF="shared_preferences";
 String s1;
@@ -65,17 +66,27 @@ String name1;
 
                 ref1= FirebaseDatabase.getInstance().getReference("Groups").child(s1);
                 DatabaseReference reg2 = ref1.push();
-
+                d2 = FirebaseDatabase.getInstance().getReference().child("Transactions").child(s1).child(user.getUid());
+                DatabaseReference reg3=d2.push();
                 Map<Object,String> mp =new HashMap<>();
+                Map<Object,String> mp1 =new HashMap<>();
                 mp.put("id",user.getUid().toString());
+                mp1.put("amount".toString(),"0");
                 reg2.setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isComplete()){
-                            SharedPreferences sharedPreferences=getSharedPreferences(SHARED_PREF,MODE_PRIVATE);
-                            SharedPreferences.Editor editor=sharedPreferences.edit();
-                            editor.putString(id, String.valueOf(0));
                             Toast.makeText(JoinGroup.this, "Successfully added", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(JoinGroup.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                d2.setValue(mp1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isComplete()){
+                           // Toast.makeText(JoinGroup.this, "Successfully added", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(JoinGroup.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }

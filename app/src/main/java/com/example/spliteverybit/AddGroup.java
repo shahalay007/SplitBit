@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class AddGroup extends AppCompatActivity {
 private EditText group_name;
-private DatabaseReference d1,ref;
+private DatabaseReference d1,ref,d2,d3;
 String name1;
 FirebaseUser user;
 ArrayList<Group_information> x;
@@ -46,6 +46,7 @@ ArrayList<Group_information> x;
         final String id=user.getUid();
 
         ref = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -56,24 +57,37 @@ ArrayList<Group_information> x;
 
             }
         });
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String s1=group_name.getText().toString();
 
                 d1= FirebaseDatabase.getInstance().getReference("Groups").child(s1);
+                d2 = FirebaseDatabase.getInstance().getReference().child("Transactions").child(s1).child(user.getUid());
                 DatabaseReference reg2 = d1.push();
-
+                DatabaseReference reg3=d2.push();
+                String key1=d2.push().getKey().toString();
                 Map<Object,String> mp =new HashMap<>();
+                Map<Object,String>mp1=new HashMap<>();
+
                 mp.put("id",user.getUid().toString());
+                mp1.put("amount".toString(),"0");
                 reg2.setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isComplete()){
                             Toast.makeText(AddGroup.this, "Successfully added", Toast.LENGTH_SHORT).show();
-                            SharedPreferences sharedPreferences=getSharedPreferences(SHARED_PREF,MODE_PRIVATE);
-                            SharedPreferences.Editor editor=sharedPreferences.edit();
-                            editor.putString(id, String.valueOf(0));
+                        }else{
+                            Toast.makeText(AddGroup.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                d2.setValue(mp1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isComplete()){
+                            //Toast.makeText(AddGroup.this, "Successfully added", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(AddGroup.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
