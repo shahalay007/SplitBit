@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword, inputName, inputPhone, inputDepartment, confirmPassword;
@@ -33,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private DatabaseReference databaseReference,d1,d2;
     private FirebaseAuth firebaseAuth;
+    Map<String,String>m=new HashMap<>();
     private DatabaseReference d;
 
 
@@ -115,8 +119,10 @@ public class SignUpActivity extends AppCompatActivity {
                             databaseReference = databaseReference.child("Users");
                             databaseReference.child(user.getUid()).setValue(userinfo);
                             databaseReference = FirebaseDatabase.getInstance().getReference().child("UserID");
-                            d1=FirebaseDatabase.getInstance().getReference().child("Id-Name");
-                            d1.child(user.getUid()).setValue(name);
+
+
+                            Intent intent = new Intent(SignUpActivity.this,OnegroupDetails.class);
+                            startActivity(intent);
                             d2=FirebaseDatabase.getInstance().getReference().child("Name");
                             d2.child(name).setValue(user.getUid());
                             databaseReference.child(email1).setValue(user.getUid());

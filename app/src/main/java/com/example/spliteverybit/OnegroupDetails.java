@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Pair;
 import android.widget.TextView;
@@ -21,7 +22,8 @@ import java.util.Map;
 
 public class OnegroupDetails extends AppCompatActivity {
 ArrayList<String>v1,v2;
-DatabaseReference d1;
+DatabaseReference d1,d2;
+    public String s5;
 public static final String SHARED_PREF="shared_preferences";
 Map<String,Integer>m=new HashMap< String,Integer>();
     @Override
@@ -30,18 +32,22 @@ Map<String,Integer>m=new HashMap< String,Integer>();
         setContentView(R.layout.activity_onegroup_details);
         v1=new ArrayList<String>();
         v2=new ArrayList<String>();
+
         Intent intent = getIntent();
         final String s1= (String) intent.getSerializableExtra("group");
         final Map<String,Integer>m=new HashMap<>();
         d1= FirebaseDatabase.getInstance().getReference("Transactions").child(s1);
+        d2=FirebaseDatabase.getInstance().getReference("Id-Name");
         d1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot d:dataSnapshot.getChildren())
                 {
+
                     String s2=d.getKey().toString();
                     String s3=d.child("amount").getValue().toString();
-                    Integer x=Integer.parseInt(s3);
+                    final Integer x=Integer.parseInt(s3);
+
                     if(x>0)
                     {
                         v2.add(s2);
